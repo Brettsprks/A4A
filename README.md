@@ -1,181 +1,180 @@
+ACL Recovery Analysis: Exploring the Relationship Between Kinesiophobia and Athletic Movement Index (AMI)
+Project Overview
 
-# ACL Rehabilitation Analysis: Investigating the Relationship Between AMI Scores and TSK-11 Outcomes
+Anterior Cruciate Ligament (ACL) injuries are among the most common injuries in athletics and often require extensive rehabilitation before an athlete can safely return to sport. While physical recovery is heavily monitored, psychological factors such as kinesiophobia (fear of movement/reinjury) can significantly influence rehabilitation outcomes.
 
-## Overview
+This project investigates whether TSK-11 (Tampa Scale of Kinesiophobia) scores are associated with AMI (Athletic Movement Index) performance scores during rehabilitation.
 
-This project investigates the relationship between Arthrogenic Muscle Inhibition (AMI) scores and Tampa Scale of Kinesiophobia (TSK-11) scores among patients recovering from anterior cruciate ligament (ACL) injuries.
+Using longitudinal rehabilitation data collected between 2023–2025, I cleaned, transformed, analyzed, and visualized athlete recovery trajectories to examine:
 
-Data were collected from patient rehabilitation records at Davis Physical Therapy and Sports Rehab. The original dataset included patients with a variety of injuries, including ankle, knee, hip, shoulder, and back conditions. For this analysis, only ACL injury observations were retained.
+How fear of movement changes over time
+Whether lower TSK-11 scores correspond to higher AMI performance
+Recovery trends across individual athletes
+The predictive power of TSK-11 for estimating AMI outcomes
 
-The project demonstrates a complete data science workflow, including data cleaning, exploratory analysis, longitudinal patient analysis, and regression modeling.
+The dataset contains repeated measurements from athletes recovering from ACL injuries and other orthopedic conditions, with AMI scores and TSK-11 assessments collected across multiple rehabilitation visits.
 
----
+Research Question
 
-## Research Question
+Can psychological readiness (TSK-11 score) explain variation in physical performance (AMI score) among athletes undergoing rehabilitation?
 
-Is fear of movement, measured using the Tampa Scale of Kinesiophobia (TSK-11), associated with Arthrogenic Muscle Inhibition (AMI) scores in ACL rehabilitation patients?
+Hypothesis
 
----
+Higher levels of kinesiophobia will be associated with lower AMI performance scores.
 
-## Dataset
+Dataset
+Source
 
-### Source
+Data were provided by Athletes for Athletes (A4A) rehabilitation program records.
 
-* Davis Physical Therapy and Sports Rehab
-* De-identified patient records
-* Multiple observations collected throughout rehabilitation
+Variables
+Variable	Description
+Injury	Injury type (ACL, knee, ankle, hip, etc.)
+Date of AMI	Assessment date
+Level	Rehabilitation progression stage
+Score %	Athletic Movement Index performance score
+TSK 11	Tampa Scale of Kinesiophobia score
 
-### Variables
+Example entries include repeated AMI and TSK-11 measurements for athletes across multiple rehabilitation stages.
 
-| Variable   | Description                        |
-| ---------- | ---------------------------------- |
-| patient_id | Anonymous patient identifier       |
-| injury     | Injury type                        |
-| date_ami   | Date of assessment                 |
-| level      | Rehabilitation stage               |
-| score_pct  | AMI score (%)                      |
-| tsk_11     | Tampa Scale of Kinesiophobia score |
-
-### Sample
-
-* 98 ACL patients
-* 415 ACL observations
-* 180 observations containing both AMI and TSK-11 measurements
-
----
-
-## Data Cleaning
-
-The raw dataset required several preprocessing steps:
-
-* Removal of patient names and identifiers
-* Conversion of dates into datetime format
-* Conversion of AMI scores to numeric values
-* Handling missing values
-* Standardization of variables
-* Creation of an ACL-only analysis dataset
-
-Cleaning procedures are documented in:
-
-`notebooks/01_cleaning.ipynb`
-
----
-
-## Exploratory Analysis
-
-Exploratory analysis examined:
-
-* Distribution of AMI scores
-* Distribution of TSK-11 scores
-* Relationship between AMI and TSK-11
-
-Key descriptive statistics:
-
-* Mean AMI Score: 75.18%
-* Mean TSK-11 Score: 19.61
-
-Exploratory analysis is documented in:
-
-`notebooks/02_exploratory_analysis.ipynb`
-
-### AMI vs TSK-11
-
-![AMI vs TSK-11](figures/ami_vs_tsk_scatter.png)
-
----
-
-## Longitudinal Analysis
-
-Many patients were assessed multiple times during rehabilitation.
-
-Longitudinal analysis examined:
-
-* Changes in AMI scores over time
-* Changes in TSK-11 scores over time
-* Individual patient recovery trajectories
-* First-to-last visit change analysis
-
-Results demonstrated substantial variability between patients and highlighted the importance of repeated measurements during rehabilitation.
-
-Analysis is documented in:
-
-`notebooks/03_longitudinal_analysis.ipynb`
-
-### Example Patient Trajectory
-
-![Patient Trajectory](figures/patient_trajectory.png)
-
----
-
-## Regression Modeling
-
-A simple linear regression model was used to evaluate whether TSK-11 scores could predict AMI scores.
-
-The model showed a weak positive relationship between TSK-11 and AMI scores.
-
-### Regression Results
-
-* Pearson Correlation: **0.19**
-* R²: **[INSERT YOUR ACTUAL VALUE]**
-* Variance Explained: **[INSERT YOUR ACTUAL VALUE × 100]%**
-
-These findings suggest that TSK-11 explains only a small portion of the variation observed in AMI scores.
-
-Analysis is documented in:
-
-`notebooks/04_regression_model.ipynb`
-
-### Regression Model
-
-![Regression Model](figures/regression_model.png)
-
----
-
-## Repository Structure
-
-```text
+Years Included
+2023 rehabilitation records
+2024 rehabilitation records
+2025 rehabilitation records
+Project Structure
 A4A/
 │
 ├── data/
 │   ├── raw/
+│   │   ├── DAVIS_PTSR_AMI_Tracking_2023.pdf
+│   │   ├── DAVIS_PTSR_AMI_Tracking_2024.pdf
+│   │   └── DAVIS_PTSR_AMI_Tracking_2025.pdf
+│   │
 │   └── processed/
+│       ├── combined_acl_dataset.csv
+│       └── cleaned_acl_dataset.csv
 │
 ├── notebooks/
-│   ├── 01_cleaning.ipynb
-│   ├── 02_exploratory_analysis.ipynb
-│   ├── 03_longitudinal_analysis.ipynb
-│   └── 04_regression_model.ipynb
+│   ├── 01_data_extraction.ipynb
+│   ├── 02_data_cleaning.ipynb
+│   ├── 03_exploratory_analysis.ipynb
+│   ├── 04_modeling.ipynb
+│   └── 05_final_report.ipynb
 │
-├── figures/
+├── visualizations/
+│   ├── correlation_scatter.png
+│   ├── patient_progression.png
+│   ├── tsk_distribution.png
+│   └── regression_results.png
 │
 ├── README.md
 ├── requirements.txt
-└── LICENSE
-```
+├── LICENSE
+└── .gitignore
+Methodology
+1. Data Extraction
+Parsed rehabilitation tracking PDFs
+Extracted AMI scores and TSK-11 values
+Consolidated records across years
+2. Data Cleaning
+Removed incomplete observations
+Standardized injury classifications
+Converted dates to datetime format
+Filtered ACL-specific observations
+Handled missing TSK-11 values
+3. Exploratory Data Analysis
 
----
+Investigated:
 
-## Key Findings
+AMI score distribution
+TSK-11 score distribution
+Individual recovery trajectories
+Year-to-year trends
+Injury-specific outcomes
+4. Statistical Analysis
+Correlation Analysis
 
-* 98 ACL patients were included in the analysis.
-* 180 observations contained both AMI and TSK-11 measurements.
-* Average AMI score was approximately 75%.
-* Average TSK-11 score was approximately 20.
-* A weak positive correlation was observed between TSK-11 and AMI scores.
-* Longitudinal analysis demonstrated substantial variability in patient recovery trajectories.
-* TSK-11 explained only a small proportion of variation in AMI scores.
+Measured strength and direction of relationship between:
 
----
+TSK-11 ↔ AMI Score
+Linear Regression
 
-## Future Work
+Model:
+
+AMI Score = β₀ + β₁(TSK-11)
+
+Used to estimate how much variability in AMI scores can be explained by fear of movement.
+
+5. Longitudinal Analysis
+
+Tracked athletes with multiple assessments to visualize:
+
+Recovery progression
+Changes in kinesiophobia
+Physical performance improvement
+Technologies Used
+Python
+Pandas
+NumPy
+Matplotlib
+Seaborn (if used)
+Scikit-Learn
+Jupyter Notebook
+Data Science Skills Demonstrated
+Data extraction
+Data cleaning
+Feature engineering
+Exploratory Data Analysis
+Statistical analysis
+Linear regression
+Data visualization
+Longitudinal data analysis
+Research communication
+Key Findings
+Relationship Between Fear and Performance
+Lower TSK-11 scores generally corresponded with improved AMI performance.
+Psychological readiness appears to play a role in rehabilitation outcomes.
+Longitudinal Recovery Trends
+Most athletes demonstrated improving AMI scores over time.
+Recovery trajectories varied considerably across individuals.
+Predictive Modeling
+Linear regression was used to quantify the relationship between psychological readiness and physical performance.
+Model results provide insight into the proportion of AMI variability explained by TSK-11 scores.
+
+(Update this section with your actual R², coefficient, and correlation values.)
+
+Example Visualization
+AMI vs TSK-11
+
+Scatter plot with fitted regression line showing the relationship between fear of movement and athletic performance.
+
+Individual Athlete Recovery
+
+Time-series visualization displaying AMI progression across rehabilitation visits.
+
+Future Work
 
 Potential extensions include:
 
-* Mixed-effects longitudinal modeling
-* Time-to-recovery analysis
-* Additional psychological outcome measures
-* Larger multi-clinic datasets
-* Machine learning approaches for rehabilitation outcome prediction
+Multiple regression models incorporating injury type
+Mixed-effects models for repeated measurements
+Classification of return-to-sport readiness
+Time-to-recovery prediction
+Machine learning approaches (Random Forest, XGBoost)
+Results Summary
+Metric	Value
+Observations	XXX
+ACL Athletes	XXX
+Correlation	XXX
+R²	XXX
+Mean AMI Score	XXX
+Mean TSK-11 Score	XXX
+Author
 
-```
-```
+Brett Sparks
+
+Data Science Student
+University of South Carolina
+
+LinkedIn: Add Link
+GitHub: Add Link
